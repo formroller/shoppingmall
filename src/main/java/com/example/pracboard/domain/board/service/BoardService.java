@@ -22,6 +22,7 @@ public interface BoardService {
                 .bno(dto.getBno())
                 .title(dto.getTitle())
                 .price(dto.getPrice())
+                .content(dto.getContent())
                 .build();
 
         return board;
@@ -32,6 +33,7 @@ public interface BoardService {
                 .bno(board.getBno())
                 .title(board.getTitle())
                 .price(board.getPrice())
+                .content(board.getContent())
                 .regDate(board.getRegDate())
                 .build();
 

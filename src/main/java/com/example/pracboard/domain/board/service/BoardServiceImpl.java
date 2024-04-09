@@ -37,7 +37,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public PageResponseDTO<BoardDTO, Board> getList(PageRequestDTO requestDTO) {
-        Pageable pageable = requestDTO.getPageable(Sort.by("bno"));
+        Pageable pageable = requestDTO.getPageable(Sort.by("bno").descending());
 
         Page<Board> result = repository.findAll(pageable);
 

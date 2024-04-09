@@ -20,11 +20,14 @@ public class Board extends Auditable {
 
     private String title;
 
+    private String content;
+
     private long price;
 
-    private void changes(String title, long price){
+    private void changes(String title, long price, String content){
         this.title=title;
         this.price=price;
+        this.content=content;
     }
 
 }

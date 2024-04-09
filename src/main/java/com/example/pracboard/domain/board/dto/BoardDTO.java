@@ -13,6 +13,7 @@ public class BoardDTO {
     private Long bno;
     private String title;
     private long price;
+    private String content;
     private LocalDateTime regDate;
 
     private LocalDateTime modDate;

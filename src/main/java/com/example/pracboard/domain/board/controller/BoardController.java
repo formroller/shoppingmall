@@ -3,6 +3,7 @@ package com.example.pracboard.domain.board.controller;
 import com.example.pracboard.domain.board.dto.BoardDTO;
 import com.example.pracboard.domain.board.service.BoardService;
 import com.example.pracboard.global.page.PageRequestDTO;
+import com.example.pracboard.global.page.PageResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -22,17 +23,18 @@ public class BoardController {
     public void register(){
         log.info(" -------------- product register ----------------- ");
     }
-//    @PostMapping("/register")
-////    public String register(BoardDTO dto, RedirectAttributes redirectAttributes){
-//    public void register(BoardDTO dto, RedirectAttributes redirectAttributes){
-//        log.info("Board DTO : "+dto);
-//
-//        Long bno = boardService.register(dto);
-//
-//        redirectAttributes.addFlashAttribute("message", bno);
-//
-////        return "redirect:/board/list";
-//    }
+
+    @PostMapping("/register")
+    public String register(@ModelAttribute("requestDTO") PageRequestDTO requestDTO,
+                           BoardDTO dto, Model model){
+        log.info("Board DTO : "+dto);
+
+        Long bno = boardService.register(dto);
+
+        model.addAttribute("requestDTO",requestDTO);
+
+        return "redirect:/board/list";
+    }
 
     @GetMapping("/list")
     public void list(PageRequestDTO requestDTO, Model model){
