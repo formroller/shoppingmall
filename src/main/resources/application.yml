@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/practiceDB?createDatabaseIfNotExist=true
+    user: practiceDB
+    password: test
+
+  jpa:
+    hibernate:
+#      ddlAuto: create
+      ddlAuto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+
+level:
+  logging:
+    org:
+      springframework:
+        security:
+          debug: trace
+
+
