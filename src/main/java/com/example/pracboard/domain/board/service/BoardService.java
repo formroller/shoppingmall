@@ -14,6 +14,7 @@ public interface BoardService {
 
     BoardDTO get(Long bno);
 
+    void modify(BoardDTO boardDTO);
 
 
     /*Convert*/

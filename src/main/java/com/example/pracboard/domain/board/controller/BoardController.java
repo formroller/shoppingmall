@@ -45,9 +45,8 @@ public class BoardController {
 
     }
 
-    @GetMapping("/read")
-//    public String read(long gno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model){
-    public void read(long bno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model){
+    @GetMapping({"/read", "/modify"})
+    public void read(Long bno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model){
 
         log.info("requestDTO : "+bno);
 
@@ -55,9 +54,25 @@ public class BoardController {
 
         model.addAttribute("dto", dto);
 
-//        return "/read";
     }
 
-    @GetMapping("/index")
-    public String getBasic(){return "index";}
+    @PostMapping("/modify")
+    public String modify(BoardDTO boardDTO,
+                       @ModelAttribute("requestDTO") PageRequestDTO requestDTO,
+                       RedirectAttributes redirectAttributes){
+        log.info("Modify Board Num : "+boardDTO);
+
+        boardService.modify(boardDTO);
+
+        redirectAttributes.addAttribute("page", requestDTO.getPage());
+        redirectAttributes.addAttribute("keyword", requestDTO.getKeyword());
+        redirectAttributes.addAttribute("bno", boardDTO.getBno());
+
+        return "redirect:/board/list";
+    }
 }
+
+
+//    @GetMapping("/index")
+//    public String getBasic(){return "index";}
+//}

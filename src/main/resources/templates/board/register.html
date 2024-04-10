@@ -80,20 +80,20 @@
                             <div class="form-group">
                                 <div class="small mb-1" style="display:none;">${dto.bno}]]</div>
                                 <div class="small mb-1">SKU: BST-498</div>
-                                <input type="text" class="display-3 fw-light" style="margin-bottom: 30px; width: 500px;" name="title" placeholder="상품명">
+                                <input type="text" class="display-6 fw-light" style="margin-bottom: 20px; width: 600px;" name="title" placeholder="상품명">
                             </div>
                             <div>
                                 <div class="fs-5 mb-5">
                                     <input type="price"  name="price" placeholder="가격">
                                 </div>
                             </div>
-
-                            <textarea class="lead" rows="5" cols="40" name="content"></textarea>
+                            <textarea class="lead" rows="15" cols="48" name="content" placeholder="상품 설명"></textarea>
                         </div>
                     </div>
                 </div>
 
-                <div class="float-md-end">
+<!--                <div class="float-sm-end">-->
+                <div class="float-sm-end">
                 <button type="submit" class="btn btn-primary" style="display: inline-block">등록</button>
                 <a th:href="@{/board/list}"><button type="button" class="btn btn-primary" style="display: inline-block">목록</button></a>
             </div>

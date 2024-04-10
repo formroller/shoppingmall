@@ -7,6 +7,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -46,4 +49,27 @@ public class BoardRepositoryTest {
         System.out.println();
         System.out.println(replies);
     }
+
+    @Test
+    public void testModify(){
+        Long bno = 403L;
+
+        Optional<Board> result = repository.findById(bno);
+
+        Board board = result.orElseThrow();
+
+        board.change("Update Title", 1234132L, "update content1234");
+
+        repository.save(board);
+
+    }
+
+    @DisplayName("QueryDsl - Search Test")
+    @Test
+    public void testSearch(){
+        Pageable pageable = PageRequest.of(1,10, Sort.by("bno").descending());
+
+        repository.search(pageable);
+    }
+
 }

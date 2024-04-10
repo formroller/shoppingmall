@@ -55,5 +55,28 @@ public class BoardServiceImpl implements BoardService {
         return result.isPresent() ? toDTO(result.get()) : null;
     }
 
+    @Override
+    public void modify(BoardDTO boardDTO) {
+//        Optional<Board> result = repository.findById(boardDTO.getBno());
+//        Board result = repository.findById(boardDTO.getBno());
+
+//        Board board = result.orElseThrow();
+
+//        if(board != null){
+//            board.change(board.getTitle(), board.getPrice(), board.getContent());
+//
+//            repository.save(board);
+
+        Board result = repository.getReferenceById(boardDTO.getBno());
+
+        if(result != null){
+            result.change(boardDTO.getTitle(),
+                    boardDTO.getPrice(),
+                    boardDTO.getContent());
+        }
+
+
+    }
+
 
 }
