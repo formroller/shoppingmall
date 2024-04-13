@@ -4,6 +4,7 @@ import com.example.pracboard.domain.board.dto.BoardDTO;
 import com.example.pracboard.domain.board.entity.Board;
 import com.example.pracboard.global.page.PageRequestDTO;
 import com.example.pracboard.global.page.PageResponseDTO;
+import com.querydsl.core.BooleanBuilder;
 
 public interface BoardService {
 
@@ -15,6 +16,7 @@ public interface BoardService {
     BoardDTO get(Long bno);
 
     void modify(BoardDTO boardDTO);
+
 
 
     /*Convert*/

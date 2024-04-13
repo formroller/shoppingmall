@@ -8,9 +8,9 @@ import lombok.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 @Builder
 @ToString(exclude = "board")
-@Getter
 public class Reply extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +18,10 @@ public class Reply extends Auditable {
 
     private String text;
 
-    private String writer;
+    private String replyer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
+
+    private void changeText(String text){this.text=text;}
 }

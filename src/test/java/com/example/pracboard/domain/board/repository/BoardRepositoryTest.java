@@ -1,12 +1,15 @@
 package com.example.pracboard.domain.board.repository;
 
+import com.example.pracboard.domain.board.dto.BoardListReplyCountDTO;
 import com.example.pracboard.domain.board.entity.Board;
 import com.example.pracboard.domain.reply.entity.Reply;
 import com.example.pracboard.domain.reply.repository.ReplyRepository;
+import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,6 +18,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
+@Log4j2
 public class BoardRepositoryTest {
     @Autowired
     private BoardRepository repository;
@@ -70,6 +74,19 @@ public class BoardRepositoryTest {
         Pageable pageable = PageRequest.of(1,10, Sort.by("bno").descending());
 
         repository.search(pageable);
+    }
+
+
+    @DisplayName("Keyword Search")
+    @Test
+    public void testSearchKeyword(){
+        String keyword = "yj";
+
+        Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());
+
+        Page<BoardListReplyCountDTO> result = repository.searchKeyword(keyword, pageable);
+
+        result.getContent().forEach(board -> log.info(board));
     }
 
 }

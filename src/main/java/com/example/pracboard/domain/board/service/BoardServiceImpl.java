@@ -5,6 +5,7 @@ import com.example.pracboard.domain.board.entity.Board;
 import com.example.pracboard.domain.board.repository.BoardRepository;
 import com.example.pracboard.global.page.PageRequestDTO;
 import com.example.pracboard.global.page.PageResponseDTO;
+import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -77,6 +78,8 @@ public class BoardServiceImpl implements BoardService {
 
 
     }
+
+    // 검색 처리
 
 
 }
