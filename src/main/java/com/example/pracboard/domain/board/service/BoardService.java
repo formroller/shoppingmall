@@ -18,6 +18,7 @@ public interface BoardService {
     void modify(BoardDTO boardDTO);
 
 
+    PageResponseDTO<BoardDTO, Object[]> getSearch(PageRequestDTO requestDTO);
 
     /*Convert*/
     default Board toEntity(BoardDTO dto){
@@ -38,6 +39,18 @@ public interface BoardService {
                 .price(board.getPrice())
                 .content(board.getContent())
                 .regDate(board.getRegDate())
+                .build();
+
+        return dto;
+    }
+    default BoardDTO entityToCountDTO(Board board, Long replyCnt){
+        BoardDTO dto = BoardDTO.builder()
+                .bno(board.getBno())
+                .title(board.getTitle())
+                .price(board.getPrice())
+                .content(board.getContent())
+                .regDate(board.getRegDate())
+                .replyCnt(replyCnt.intValue())
                 .build();
 
         return dto;

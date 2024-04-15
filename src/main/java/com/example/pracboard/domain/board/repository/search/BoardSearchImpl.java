@@ -6,17 +6,26 @@ import com.example.pracboard.domain.board.entity.QBoard;
 import com.example.pracboard.domain.reply.entity.QReply;
 import com.example.pracboard.global.page.PageRequestDTO;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.JPQLQuery;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Log4j2
 public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardSearch {
 
     public BoardSearchImpl() {
@@ -93,29 +102,59 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
     }
 
     @Override
-    public BooleanBuilder getSearch(PageRequestDTO requestDTO) {
-
+    public Page<Object[]> getSearchList(PageRequestDTO requestDTO, Pageable pageable) {
         QBoard board = QBoard.board;
-
-        BooleanBuilder builder = new BooleanBuilder();
+        QReply reply = QReply.reply;
 
         String keyword = requestDTO.getKeyword();
 
-        if(keyword == null || keyword.length()==0){
-            return builder;
+        JPQLQuery<Board> jpqlQuery = from(board);
+        jpqlQuery.leftJoin(reply).on(board.eq(board));
+
+        JPQLQuery<Tuple> tuple = jpqlQuery.select(board, reply.count());
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+        if(!keyword.isEmpty() || keyword.length()!=0){
+            BooleanExpression expression = board.title.contains(keyword);
+
+            expression.and(board.content.contains(keyword));
+
+            booleanBuilder.and(expression);
         }
 
-        // 검색 조건
-        BooleanBuilder condition = new BooleanBuilder();
+        // order by
+        Sort sort = pageable.getSort();
 
-        if(board.title.equals(keyword)){
-            condition.or(board.title.contains(keyword));
-        }
-        if(board.content.equals(keyword)){
-            condition.or(board.content.contains(keyword));
-        }
+        sort.stream().forEach(order ->{
+            Order direction = order.isAscending() ?Order.ASC : Order.DESC;
+            String prop = order.getProperty();
 
-        builder.and(condition);
-        return builder;
+            PathBuilder orderExpression = new PathBuilder(Board.class, "board");
+            tuple.orderBy(new OrderSpecifier<>(direction, orderExpression.get(prop))); // jpqlQuery -> tuple
+        });
+
+        jpqlQuery.groupBy(board);
+
+        // Paging
+        jpqlQuery.offset(pageable.getOffset());
+        jpqlQuery.limit(pageable.getPageSize());
+
+
+//        List<Board> result = jpqlQuery.fetch();
+        List<Tuple> result = tuple.fetch();
+
+        Long count = tuple.fetchCount();;
+
+
+        return new PageImpl<Object[]>(
+                result.stream().map(t->t.toArray()).collect(Collectors.toList()),
+                pageable,
+                count);
+    }
+
+    @Override
+    public Page<Object[]> getSearchKeyword(String keyword, Pageable pageable) {
+        return null;
     }
 }

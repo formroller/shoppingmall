@@ -12,5 +12,7 @@ public interface BoardSearch {
 
     Page<BoardListReplyCountDTO> searchKeyword(String keyword, Pageable pageable);
 
-    BooleanBuilder getSearch(PageRequestDTO requestDTO);
+    Page<Object[]> getSearchList(PageRequestDTO requestDTO, Pageable pageable);
+
+    Page<Object[]> getSearchKeyword(String keyword, Pageable pageable);
 }

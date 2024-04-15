@@ -9,12 +9,11 @@ import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -80,6 +79,32 @@ public class BoardServiceImpl implements BoardService {
     }
 
     // 검색 처리
+    @Override
+    public PageResponseDTO<BoardDTO, Object[]> getSearch(PageRequestDTO requestDTO) {
+//        Pageable pageable = requestDTO.getPageable(Sort.by("bno").descending());
 
+//        BooleanBuilder builder = repository.getSearchList(requestDTO);
+
+//        Page<Board> result = repository.findAll(builder, pageable);
+//
+//        Function<Board, BoardDTO> fn = (board -> toDTO(board));
+//
+//        return new PageResponseDTO<>(result, fn);
+
+//        return null;
+        /*querydsl*/
+//        Function<Object[], BoardDTO> fn = (en->
+//                toDTO((Board)en[0], (Long)))
+
+        Function<Object[], BoardDTO> fn = (en -> entityToCountDTO((Board) en[0], (Long) en[1]));
+
+        Page<Object[]> result = repository.getSearchList(
+                requestDTO,
+//                requestDTO.getKeyword(),
+                requestDTO.getPageable(Sort.by("bno").descending())
+        );
+
+        return new PageResponseDTO<>(result, fn);
+    }
 
 }

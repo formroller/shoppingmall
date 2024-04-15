@@ -22,4 +22,5 @@ public abstract class Auditable {
     @Column(name = "moddate")
     @LastModifiedDate
     private LocalDateTime modDate;
+
 }

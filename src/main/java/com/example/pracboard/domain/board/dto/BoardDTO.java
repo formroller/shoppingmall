@@ -17,6 +17,7 @@ public class BoardDTO {
     private LocalDateTime regDate;
 
     private LocalDateTime modDate;
+    private int replyCnt;
 
     private int cartCnt; // 카트 담은 수
 }
