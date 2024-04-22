@@ -63,11 +63,10 @@
         </header>
 
         <!-- Search -->
-        <form action="/templates/list" method="get" id="searchForm" style="margin: auto; text-align: center;">
+        <form action="/board/list" method="get" id="searchForm" style="margin: auto; text-align: center;">
             <div class="input-group d-flex align-items-center justify-content-center">
                 <input type="hidden" name="page" value="1">
-<!--                <input class="form-control " name="keyword" th:value="${pageRequestDTO.keyword}"> &lt;!&ndash; col-lg-3 클래스 추가 및 오른쪽 마진 추가 &ndash;&gt;-->
-                <input class="form-control " name="keyword" th:value="${pageRequestDTO.keyword}"> <!-- col-lg-3 클래스 추가 및 오른쪽 마진 추가 -->
+                <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}"> <!-- col-lg-3 클래스 추가 및 오른쪽 마진 추가 -->
                 <button class="btn btn-outline-secondary searchBtn" type="submit">검색</button>
             </div>
         </form>
@@ -99,6 +98,15 @@
             </li>
         </ul>
 
+        <script th:inline="javascript">
+            var searchForm = $("#searchForm");
+
+            $('.searchBtn').click(function(e){
+                searchForm.submit();
+            });
+
+        </script>
+
         <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
@@ -108,5 +116,8 @@
         <!-- Core theme JS-->
         <script th:href="@{/js/scripts.js}"></script>
     </body>
+
+
+
 </th:block>
 </html>

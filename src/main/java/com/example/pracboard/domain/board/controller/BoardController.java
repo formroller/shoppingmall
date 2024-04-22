@@ -41,7 +41,7 @@ public class BoardController {
 
         log.info(requestDTO);
 
-        model.addAttribute("result", boardService.getList(requestDTO));
+        model.addAttribute("result", boardService.getSearch(requestDTO));
 
     }
 

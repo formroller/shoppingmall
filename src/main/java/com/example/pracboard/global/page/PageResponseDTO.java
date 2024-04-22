@@ -33,6 +33,8 @@ public class PageResponseDTO<DTO, EN>{
         makePageList(result.getPageable());
     }
 
+
+
     private void makePageList(Pageable pageable){
         this.page = pageable.getPageNumber()+1;
         this.size = pageable.getPageSize();
@@ -51,6 +53,4 @@ public class PageResponseDTO<DTO, EN>{
         pageList = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
 
     }
-
-
 }

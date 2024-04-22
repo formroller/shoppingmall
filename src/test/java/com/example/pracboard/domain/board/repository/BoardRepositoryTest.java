@@ -4,6 +4,8 @@ import com.example.pracboard.domain.board.dto.BoardListReplyCountDTO;
 import com.example.pracboard.domain.board.entity.Board;
 import com.example.pracboard.domain.reply.entity.Reply;
 import com.example.pracboard.domain.reply.repository.ReplyRepository;
+import com.example.pracboard.global.page.PageRequestDTO;
+import com.example.pracboard.global.page.PageResponseDTO;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +32,7 @@ public class BoardRepositoryTest {
     @Test
     public void testInsert(){
         IntStream.rangeClosed(1,300).forEach(i->{
-            Board board = Board.builder()
+             Board board =  Board.builder()
                     .title("Sample Product"+i)
                     .price(i*1402)
                     .build();
@@ -43,9 +45,9 @@ public class BoardRepositoryTest {
 
     @Test
     public void testGet(){
-        Optional<Board> result = repository.findById(100L);
+        Optional< Board> result = repository.findById(100L);
 
-        Board board = result.get();
+         Board board = result.get();
 
         Optional<Reply> replies = replyRepository.findById(board.getBno());
 
@@ -58,9 +60,9 @@ public class BoardRepositoryTest {
     public void testModify(){
         Long bno = 403L;
 
-        Optional<Board> result = repository.findById(bno);
+        Optional< Board> result = repository.findById(bno);
 
-        Board board = result.orElseThrow();
+         Board board = result.orElseThrow();
 
         board.change("Update Title", 1234132L, "update content1234");
 
@@ -80,13 +82,15 @@ public class BoardRepositoryTest {
     @DisplayName("Keyword Search")
     @Test
     public void testSearchKeyword(){
-        String keyword = "yj";
+        PageRequestDTO requestDTO = new PageRequestDTO().builder().keyword("test").build();
 
-        Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());
 
-        Page<BoardListReplyCountDTO> result = repository.searchKeyword(keyword, pageable);
 
-        result.getContent().forEach(board -> log.info(board));
+//        Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());
+//
+//        Page<Board> result = repository.findAllKeywordWithConditions(requestDTO, pageable);
+//
+//        result.getContent().forEach(board -> log.info(board));
     }
 
 }

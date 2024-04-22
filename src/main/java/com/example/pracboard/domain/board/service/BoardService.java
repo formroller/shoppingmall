@@ -1,17 +1,18 @@
 package com.example.pracboard.domain.board.service;
 
 import com.example.pracboard.domain.board.dto.BoardDTO;
+import com.example.pracboard.domain.board.dto.BoardListReplyCountDTO;
 import com.example.pracboard.domain.board.entity.Board;
 import com.example.pracboard.global.page.PageRequestDTO;
 import com.example.pracboard.global.page.PageResponseDTO;
-import com.querydsl.core.BooleanBuilder;
+import org.springframework.data.domain.Pageable;
 
 public interface BoardService {
 
     /*CRUD*/
     Long register(BoardDTO boardDTO);
 
-    PageResponseDTO<BoardDTO, Board> getList(PageRequestDTO requestDTO);
+//    PageResponseDTO<BoardDTO, Board> getList(PageRequestDTO requestDTO);
 
     BoardDTO get(Long bno);
 
@@ -19,6 +20,10 @@ public interface BoardService {
 
 
     PageResponseDTO<BoardDTO, Object[]> getSearch(PageRequestDTO requestDTO);
+
+
+//    PageResponseDTO<Board, Object[]> getKeyword(PageRequestDTO requestDTO, Pageable pageable);
+//    PageResponseDTO<BoardListReplyCountDTO, Board> getKeyword(PageRequestDTO requestDTO, Pageable pageable);
 
     /*Convert*/
     default Board toEntity(BoardDTO dto){
