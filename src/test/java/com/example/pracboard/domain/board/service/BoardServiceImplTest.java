@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,6 +40,20 @@ class BoardServiceImplTest {
         Long bno = 11L;
 
         System.out.println(service.get(bno));
+
+    }
+
+    @Test
+    public void testModify(){
+
+        BoardDTO dto = BoardDTO.builder().bno(298L)
+                .title("Update Complete")
+                .price(999999999)
+                .content("Re Upload")
+                .build();
+
+        service.modify(dto);
+
 
     }
 

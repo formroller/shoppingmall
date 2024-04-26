@@ -18,6 +18,7 @@ public interface BoardService {
 
     void modify(BoardDTO boardDTO);
 
+    void remove(Long bno);
 
     PageResponseDTO<BoardDTO, Object[]> getSearch(PageRequestDTO requestDTO);
 

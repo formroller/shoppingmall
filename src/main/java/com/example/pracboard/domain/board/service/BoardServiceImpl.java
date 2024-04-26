@@ -74,13 +74,34 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void modify(BoardDTO boardDTO) {
-        Board result = repository.getReferenceById(boardDTO.getBno());
+//        Board result = repository.getReferenceById(boardDTO.getBno());
+//
+//        if(result != null){
+//            result.change(boardDTO.getTitle(),
+//                    boardDTO.getPrice(),
+//                    boardDTO.getContent());
+//        }
+//        return result.getBno();
 
-        if(result != null){
-            result.change(boardDTO.getTitle(),
+        Optional<Board> result = repository.findById(boardDTO.getBno());
+
+        if(result.isPresent()){
+            Board entity = result.get();
+
+            entity.change(boardDTO.getTitle(),
                     boardDTO.getPrice(),
                     boardDTO.getContent());
+
+            repository.save(entity);
         }
+
+//        return toDTO(result.get()).getBno();
+
+    }
+
+    @Override
+    public void remove(Long bno){
+        repository.deleteById(bno);
     }
 
 

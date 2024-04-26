@@ -147,7 +147,7 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         Sort sort = pageable.getSort();
 
         sort.stream().forEach(order -> {
-            Order direction = order.isDescending() ? Order.ASC : Order.DESC;
+            Order direction = order.isAscending() ? Order.ASC : Order.DESC;
             String prop = order.getProperty();
 
             PathBuilder orderExpression = new PathBuilder(Board.class, "board");

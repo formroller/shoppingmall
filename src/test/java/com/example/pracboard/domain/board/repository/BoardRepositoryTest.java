@@ -35,6 +35,7 @@ public class BoardRepositoryTest {
              Board board =  Board.builder()
                     .title("Sample Product"+i)
                     .price(i*1402)
+                    .content("Content is ---- "+i)
                     .build();
 
             repository.save(board);
@@ -58,7 +59,7 @@ public class BoardRepositoryTest {
 
     @Test
     public void testModify(){
-        Long bno = 403L;
+        Long bno = 298L;
 
         Optional< Board> result = repository.findById(bno);
 
