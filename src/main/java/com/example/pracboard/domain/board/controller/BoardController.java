@@ -36,6 +36,12 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
+    @GetMapping("/")
+    public String list(){
+        log.info(" -------- List -----------");
+
+        return "/board/list";
+    }
     @GetMapping("/list")
     public void list(PageRequestDTO requestDTO, Model model){
 

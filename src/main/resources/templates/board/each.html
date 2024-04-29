@@ -20,18 +20,17 @@
                     <h5 class="fw-bolder">[[${dto.title}]]</h5>
                     <!-- Product price-->
                       [[${dto.price}]]원
-
                   </div>
                 </div>
                 <!-- Product actions-->
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                   <div class="text-center">
-<!--                      <a class="btn btn-outline-dark mt-auto"-->
-<!--                                              href="@{/board/read(gno=${dto.gno}, page=${result.page},-->
-<!--                                              keyword=${result.keyword})}">View options</a>-->
                       <a class="btn btn-outline-dark mt-auto"
                          th:href="@{/board/read(bno=${dto.bno}, page=${result.page},
-                                              keyword=${pageRequestDTO.keyword})}">View options</a>
+                                              keyword=${pageRequestDTO.keyword})}">View options
+                          <span style="font-size: small; color:goldenrod">([[${dto.replyCnt}]])</span>
+                      </a>
+
                   </div>
                 </div>
               </div>
