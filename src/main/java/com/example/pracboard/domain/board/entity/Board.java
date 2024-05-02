@@ -1,17 +1,15 @@
 package com.example.pracboard.domain.board.entity;
 
+import com.example.pracboard.domain.member.entity.Member;
 import com.example.pracboard.global.auditable.Auditable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
+@ToString(exclude = "writer")
 @Getter
 public class Board extends Auditable {
     @Id
@@ -29,5 +27,8 @@ public class Board extends Auditable {
         this.price=price;
         this.content=content;
     }
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private Member writer;
 
 }

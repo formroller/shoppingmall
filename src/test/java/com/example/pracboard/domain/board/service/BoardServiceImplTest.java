@@ -60,9 +60,6 @@ class BoardServiceImplTest {
     @DisplayName("키워드 검색 테스트")
     @Test
     public void testSearchKeyword(){
-//        PageRequestDTO requestDTO = new PageRequestDTO();
-
-//        PageRequestDTO requestDTO = PageRequestDTO.builder().keyword("test").build();
         PageRequestDTO requestDTO = PageRequestDTO.builder().keyword("test").page(1).size(12).build();
 
         Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());

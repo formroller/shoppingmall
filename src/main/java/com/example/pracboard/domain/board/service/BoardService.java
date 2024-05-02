@@ -23,8 +23,6 @@ public interface BoardService {
     PageResponseDTO<BoardDTO, Object[]> getSearch(PageRequestDTO requestDTO);
 
 
-//    PageResponseDTO<Board, Object[]> getKeyword(PageRequestDTO requestDTO, Pageable pageable);
-//    PageResponseDTO<BoardListReplyCountDTO, Board> getKeyword(PageRequestDTO requestDTO, Pageable pageable);
 
     /*Convert*/
     default Board toEntity(BoardDTO dto){

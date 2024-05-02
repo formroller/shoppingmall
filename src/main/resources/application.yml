@@ -1,8 +1,11 @@
 spring:
   datasource:
 #    driverClassName: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/practiceDB?createDatabaseIfNotExist=true
+#    user: practiceDB
+#    password: test
     url: jdbc:mysql://localhost:3306/practiceDB?createDatabaseIfNotExist=true
-    user: practice
+    user: practic
     password: test
 
   jpa:
@@ -11,7 +14,7 @@ spring:
       ddlAuto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+#        dialect: org.hibernate.dialect.MySQLDialect
         show_sql: true
         format_sql: true
 
@@ -22,5 +25,4 @@ level:
       springframework:
         security:
           debug: trace
-
 

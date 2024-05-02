@@ -11,7 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -23,7 +25,7 @@ class ReplyRepositoryTest {
     @Test
     public void testInsert(){
         IntStream.rangeClosed(1,300).forEach(i->{
-            long bno = (long)(Math.random() * 300);
+            long bno = (long)(Math.random() * 100)+1;
 
             Board board = Board.builder().bno(bno).build();
 
@@ -36,7 +38,19 @@ class ReplyRepositoryTest {
             repository.save(reply);
         });
     }
-    
+
+    @DisplayName("게시물의 댓글 가져오기")
+    @Transactional
+    @Test
+    public void readReply1(){
+        Optional<Reply> result = repository.findById(10L);
+
+        Reply reply = result.get();
+
+        System.out.println(reply);
+        System.out.println(reply.getBoard());
+    }
+
     @DisplayName("특정 게시물의 댓글 조회 및 인덱스")
     @Test
     public void testBoardReplies(){

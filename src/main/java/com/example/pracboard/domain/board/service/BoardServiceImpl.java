@@ -13,12 +13,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 @Log4j2
 public class BoardServiceImpl implements BoardService {
     private final ReplyRepository replyRepository;
@@ -74,14 +76,6 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void modify(BoardDTO boardDTO) {
-//        Board result = repository.getReferenceById(boardDTO.getBno());
-//
-//        if(result != null){
-//            result.change(boardDTO.getTitle(),
-//                    boardDTO.getPrice(),
-//                    boardDTO.getContent());
-//        }
-//        return result.getBno();
 
         Optional<Board> result = repository.findById(boardDTO.getBno());
 
