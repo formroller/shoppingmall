@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymelaf.org">
+<!--<html lang="en" xmlns:th="http://thymelaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">-->
+<html lang="en" xmlns:th="http://thymelaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -89,43 +91,68 @@
                     <button type="button" class="btn btn-info">목록</button>
                 </a>
             </div>
-            <!-- Reply Section -->
-            <div>
-                <div class="mt-4">
-                    <h5 ><span class="badge badge-info addReply">리뷰 추가</span> </h5>
-                    <h5><span class="badge badge-secondary replyCnt">댓글 [[${dto.replyCnt}]]</span></h5>
-                </div>
-                <div class="list-group replyList"></div>
+
+            <div class="mt-4">
+                <h5><span class="btn btn-info" th:value="${dto.replyCnt}"> 상품평([[${dto.replyCnt}]])</span></h5>
+                <h5><span class="display-5 fs-5" th:value="${dto.replyCnt}">상품평 ([[${dto.replyCnt}]])</span></h5>
             </div>
 
-            <!-- 모달창 시작-->
-            <div class="modal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">리뷰 작성</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <input class="form-control" type="text" name="replyText" placeholder="리뷰 입력">
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control"  type="text" name="replyer" placeholder="작성자">
-                                <input type="hidden" name="rno" >
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger replyRemove">삭제</button>
-                            <button type="button" class="btn btn-warning replyModify">수정</button>
-                            <button type="button" class="btn btn-primary replySave">저장</button>
-                            <button type="button" class="btn btn-outline-secondary replyClose" data-dismiss="modal">닫기</button>
-                        </div>
+            <!-- Reply Section -->
+<!--            <div class="mt-4">-->
+<!--                <h5 ><span class="badge badge-info addReply">리뷰 추가</span> </h5>-->
+<!--                <h5><span class="badge badge-secondary">댓글 [[${dto.replyCnt}]]</span></h5> &lt;!&ndash; 수정된 부분 &ndash;&gt;-->
+<!--            </div>-->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="mt-4">
+                        <button class="btn btn-info addReplyBtn">댓글 추가</button>
                     </div>
+                    <!-- 댓글 목록 -->
+                    <ul class="list-group replyList">
+                    </ul>
                 </div>
             </div>
+
+            <!-- 댓글 페이징 -->
+            <div class="row mt-3">
+                <div class="col">
+                    <ul class="pagination replyPaging">
+                    </ul>
+                </div>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/axios@1.6.8/dist/axios.min.js"></script>
+            <script src="/static/js/reply.js"></script>
+        </section>
+
+            <!-- 모달창 시작-->
+<!--            <div class="modal" tabindex="-1" role="dialog">-->
+<!--                <div class="modal-dialog" role="document">-->
+<!--                    <div class="modal-content">-->
+<!--                        <div class="modal-header">-->
+<!--                            <h5 class="modal-title">리뷰 작성</h5>-->
+<!--                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                                <span aria-hidden="true">&times;</span>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                        <div class="modal-body">-->
+<!--                            <div class="form-group">-->
+<!--                                <input class="form-control" type="text" name="replyText" placeholder="리뷰 입력">-->
+<!--                            </div>-->
+<!--                            <div class="form-group">-->
+<!--                                <input class="form-control"  type="text" name="replyer" placeholder="작성자">-->
+<!--                                <input type="hidden" name="rno" >-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="modal-footer">-->
+<!--                            <button type="button" class="btn btn-danger replyRemove">삭제</button>-->
+<!--                            <button type="button" class="btn btn-warning replyModify">수정</button>-->
+<!--                            <button type="button" class="btn btn-primary replySave">저장</button>-->
+<!--                            <button type="button" class="btn btn-outline-secondary replyClose" data-dismiss="modal">닫기</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
         </section>
 
@@ -242,11 +269,13 @@
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
         </footer>
         <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!--        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>-->
+<!--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>-->
 
-        <!-- Core theme JS-->
-        <script th:href="@{/js/scripts.js}"></script>
-
+    <script layout:fragment="script" th:inline="javascript">
+        const bno=[[${dto.bno}]]
+        get1(bno);
+    </script>
 
     </th:block>
     </body>

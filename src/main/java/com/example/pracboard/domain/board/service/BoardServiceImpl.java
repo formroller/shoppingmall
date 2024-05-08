@@ -4,6 +4,7 @@ import com.example.pracboard.domain.board.dto.BoardDTO;
 import com.example.pracboard.domain.board.dto.BoardListReplyCountDTO;
 import com.example.pracboard.domain.board.entity.Board;
 import com.example.pracboard.domain.board.repository.BoardRepository;
+import com.example.pracboard.domain.member.entity.Member;
 import com.example.pracboard.domain.reply.repository.ReplyRepository;
 import com.example.pracboard.global.page.PageRequestDTO;
 import com.example.pracboard.global.page.PageResponseDTO;
@@ -55,7 +56,15 @@ public class BoardServiceImpl implements BoardService {
     public PageResponseDTO<BoardDTO, Object[]> getSearch(PageRequestDTO requestDTO) {
 
         /*querydsl*/
-        Function<Object[], BoardDTO> fn = (en -> entityToCountDTO((Board) en[0], (Long) en[1]));
+//        Function<Object[], BoardDTO> fn = (en -> toDTO((Board) en[0], (Long) en[1]));
+//
+//        Page<Object[]> result = repository.getKeywords(
+//                requestDTO.getKeyword(),
+//                requestDTO.getPageable(Sort.by("bno").descending())
+//        );
+//
+//        return new PageResponseDTO<>(result, fn);
+        Function<Object[], BoardDTO> fn = (en -> toDTO((Board) en[0], (Long) en[1]));
 
         Page<Object[]> result = repository.getKeywords(
                 requestDTO.getKeyword(),
@@ -65,13 +74,21 @@ public class BoardServiceImpl implements BoardService {
         return new PageResponseDTO<>(result, fn);
     }
 
+//    @Override
+//    public BoardDTO get(Long bno) {
+//        Optional<Board> result = repository.findById(bno);
+//
+//        result.orElseThrow();
+//
+//        return result.map(this::toDTO).orElse(null);
+//    }
     @Override
-    public BoardDTO get(Long bno) {
-        Optional<Board> result = repository.findById(bno);
+    public BoardListReplyCountDTO get(Long bno){
+        Object result = repository.getBoardByBno(bno);
 
-        result.orElseThrow();
+        Object[] arr = (Object[]) result;
 
-        return result.map(this::toDTO).orElse(null);
+        return entityToCountDTO((Board) arr[0], (Member) arr[1],(Long) arr[2]);
     }
 
     @Override

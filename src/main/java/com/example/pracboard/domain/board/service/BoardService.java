@@ -3,6 +3,7 @@ package com.example.pracboard.domain.board.service;
 import com.example.pracboard.domain.board.dto.BoardDTO;
 import com.example.pracboard.domain.board.dto.BoardListReplyCountDTO;
 import com.example.pracboard.domain.board.entity.Board;
+import com.example.pracboard.domain.member.entity.Member;
 import com.example.pracboard.global.page.PageRequestDTO;
 import com.example.pracboard.global.page.PageResponseDTO;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +15,7 @@ public interface BoardService {
 
 //    PageResponseDTO<BoardDTO, Board> getList(PageRequestDTO requestDTO);
 
-    BoardDTO get(Long bno);
+    BoardListReplyCountDTO get(Long bno);
 
     void modify(BoardDTO boardDTO);
 
@@ -36,24 +37,27 @@ public interface BoardService {
         return board;
     }
 
-    default BoardDTO toDTO(Board board){
+    default BoardDTO toDTO(Board board, Long replyCnt){
         BoardDTO dto = BoardDTO.builder()
                 .bno(board.getBno())
                 .title(board.getTitle())
                 .price(board.getPrice())
                 .content(board.getContent())
                 .regDate(board.getRegDate())
+                .replyCnt(replyCnt.intValue())
                 .build();
 
         return dto;
     }
-    default BoardDTO entityToCountDTO(Board board, Long replyCnt){
-        BoardDTO dto = BoardDTO.builder()
+    default BoardListReplyCountDTO entityToCountDTO(Board board, Member member, Long replyCnt){
+        BoardListReplyCountDTO dto = BoardListReplyCountDTO.builder()
                 .bno(board.getBno())
                 .title(board.getTitle())
                 .price(board.getPrice())
                 .content(board.getContent())
                 .regDate(board.getRegDate())
+                .writerEmail(member.getEmail())
+                .writerName(member.getName())
                 .replyCnt(replyCnt.intValue())
                 .build();
 

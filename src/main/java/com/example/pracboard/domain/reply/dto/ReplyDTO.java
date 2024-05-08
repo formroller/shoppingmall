@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Data
 public class ReplyDTO {
     private Long rno;
-    private String bno;
+    private Long bno;
     private String text;
     private String replyer;
     private LocalDateTime regDate;

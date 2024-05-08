@@ -1,6 +1,7 @@
 package com.example.pracboard.domain.board.controller;
 
 import com.example.pracboard.domain.board.dto.BoardDTO;
+import com.example.pracboard.domain.board.dto.BoardListReplyCountDTO;
 import com.example.pracboard.domain.board.service.BoardService;
 import com.example.pracboard.global.page.PageRequestDTO;
 import com.example.pracboard.global.page.PageResponseDTO;
@@ -40,7 +41,7 @@ public class BoardController {
     public String list(){
         log.info(" -------- List -----------");
 
-        return "/board/list";
+        return "redirect:/board/list";
     }
     @GetMapping("/list")
     public void list(PageRequestDTO requestDTO, Model model){
@@ -56,7 +57,7 @@ public class BoardController {
 
         log.info("requestDTO : "+bno);
 
-        BoardDTO dto = boardService.get(bno);
+        BoardListReplyCountDTO dto = boardService.get(bno);
 
         model.addAttribute("dto", dto);
 
