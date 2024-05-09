@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class ReplyDTO {
     private Long rno;
     private Long bno;
-    private String text;
+    private String replyText;
     private String replyer;
     private LocalDateTime regDate;
 

@@ -16,12 +16,12 @@ public class Reply extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long rno;
 
-    private String text;
+    private String replyText;
 
     private String replyer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 
-    private void changeText(String text){this.text=text;}
+    private void changeText(String replyText){this.replyText=replyText;}
 }
