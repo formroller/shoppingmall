@@ -1,1 +1,66 @@
-spring.application.name=malls
+#spring:
+#  application:
+#    name: malls
+
+jwt:
+  secret: HelloWorld
+#jwt:
+#  secret: ${SEC_KEY}
+
+spring:
+  profiles:
+    include: oauth
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/malls?createDatabaseIfNotExist=true
+    user: malls
+    password: test
+
+  jpa:
+    hibernate:
+      #      ddlAuto: create
+      ddlAuto: update
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: Asia/Seoul
+        #        dialect: org.hibernate.dialect.MySQLDialect
+        show_sql: true
+        format_sql: true
+
+  # File Upload
+  servlet:
+    multipart:
+      enabled: true # 파일 업로드 여부
+      #      location: ./upload # 임시 저장 경로
+      location: /Users/yj/Desktop/boardPrac/malls/upload # 임시 저장 경로
+      maxRequestSize: 30MB # 한 번에 최대 업로드 가능 용량
+      maxFileSize: 10MB # 파일 하나의 최대 크기
+
+level:
+  logging:
+    org:
+      hibernate:
+        SQL: DEBUG # SQL 로깅
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE # 바인딩된 매개변수 출력
+      springframework:
+        security:
+          debug: trace
+
+
+logging:
+  level:
+    org:
+      springframework: info
+    malls: debug
+
+
+com:
+  example:
+    malls:
+      path: /Users/yj/Desktop/boardPrac/malls/upload
+
+

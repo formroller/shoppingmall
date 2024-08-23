@@ -1,4 +1,4 @@
-package com.example.malls.global.security;
+package com.example.malls.global.handler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
