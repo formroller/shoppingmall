@@ -1,10 +1,12 @@
 package com.example.malls.global.config;
 
 import com.example.malls.global.APILoginFilter;
+import com.example.malls.global.filter.TokenCheckFilter;
 import com.example.malls.global.handler.APILoginSuccessHandler;
 import com.example.malls.global.handler.Custom403Handler;
 import com.example.malls.global.security.CustomUserDetailsService;
 import com.example.malls.global.handler.CustomSocialSuccessHandler;
+import com.example.malls.global.util.JWTUtil;
 import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -40,6 +42,7 @@ public class CustomSecurityConfig {
     private final DataSource dataSource; // 자동 로그인 - 쿠키와 관련된 정보를 테이블로 보관
     private final CustomUserDetailsService userDetailsService;
 
+    private final JWTUtil jwtUtil;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -65,7 +68,7 @@ public class CustomSecurityConfig {
         apiLoginFilter.setAuthenticationManager(authenticationManager);
 
         // APILoginSuccessHandler
-        APILoginSuccessHandler apiLoginSuccessHandler = new APILoginSuccessHandler();
+        APILoginSuccessHandler apiLoginSuccessHandler = new APILoginSuccessHandler(jwtUtil);
         // SuccessHandler 세팅
         apiLoginFilter.setAuthenticationSuccessHandler(apiLoginSuccessHandler);
 
@@ -74,6 +77,11 @@ public class CustomSecurityConfig {
                 .authenticationManager(authenticationManager)
                 .addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class)
 
+                // todo (추가) TokenCheckFilter 동작
+                .addFilterBefore(
+                        tokenCheckFilter(jwtUtil),
+                        UsernamePasswordAuthenticationFilter.class
+                )
                 // CSRF 비활성화
                 .csrf(AbstractHttpConfigurer::disable)
                  // 세션 미사용 - APILogin 적용시
@@ -141,6 +149,11 @@ public class CustomSecurityConfig {
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler(){
         return new CustomSocialSuccessHandler(passwordEncoder());
+    }
+
+    // 로그인한 사용자인지 체크
+    private TokenCheckFilter tokenCheckFilter(JWTUtil jwtUtil){
+        return new TokenCheckFilter(jwtUtil);
     }
 
 }
